@@ -70,7 +70,7 @@ public class GameUIManager : MonoBehaviour
         }
         else
         {
-            victoryText.text = "VICTOIRE JOUEUR " + joueur;
+            victoryText.text = "VICTORY\nPLAYER " + joueur;
         }
         gameScreen.SetActive(false);
         restartScreen.SetActive(true);

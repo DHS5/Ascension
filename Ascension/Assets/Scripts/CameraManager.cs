@@ -63,30 +63,30 @@ public class CameraManager : MonoBehaviour
     {
         if (angle == 11)
         {
-            cameraJ1.transform.position = new Vector3(4.1f, 16, 18);
+            cameraJ1.transform.localPosition = new Vector3(0f, 7.25f, 8f);
             cameraJ1.transform.eulerAngles = new Vector3(30, 180, 0);
-            cameraJ2.transform.position = new Vector3(4.1f, 16, 1.75f);
+            cameraJ2.transform.localPosition = new Vector3(0f, 7.25f, -8f);
             cameraJ2.transform.eulerAngles = new Vector3(30, 0, 0);
-            cameraPlateau1.transform.position = new Vector3(4.25f, 16, 10);
-            cameraPlateau2.transform.position = new Vector3(4.25f, 16, 10);
+            cameraPlateau1.transform.localPosition = new Vector3(0f, 7.25f, 0f);
+            cameraPlateau2.transform.localPosition = new Vector3(0f, 7.25f, 0f);
         }
         else if (angle == 13)
         {
-            cameraJ1.transform.position = new Vector3(4.1f, 18, 18.8f);
+            cameraJ1.transform.localPosition = new Vector3(0f, 7.75f, 8.5f);
             cameraJ1.transform.eulerAngles = new Vector3(35, 180, 0);
-            cameraJ2.transform.position = new Vector3(4.1f, 18, 1);
+            cameraJ2.transform.localPosition = new Vector3(0f, 7.75f, -8.5f);
             cameraJ2.transform.eulerAngles = new Vector3(35, 0, 0);
-            cameraPlateau1.transform.position = new Vector3(4.25f, 17, 10);
-            cameraPlateau2.transform.position = new Vector3(4.25f, 17, 10);
+            cameraPlateau1.transform.localPosition = new Vector3(0f, 8.25f, 0f);
+            cameraPlateau2.transform.localPosition = new Vector3(0f, 8.25f, 0f);
         }
         else if (angle == 15)
         {
-            cameraJ1.transform.position = new Vector3(4.1f, 20, 19.3f);
+            cameraJ1.transform.localPosition = new Vector3(0f, 8.25f, 9f);
             cameraJ1.transform.eulerAngles = new Vector3(40, 180, 0);
-            cameraJ2.transform.position = new Vector3(4.1f, 20, 0.5f);
+            cameraJ2.transform.localPosition = new Vector3(0f, 8.25f, -9f);
             cameraJ2.transform.eulerAngles = new Vector3(40, 0, 0);
-            cameraPlateau1.transform.position = new Vector3(4.25f, 18.5f, 10);
-            cameraPlateau2.transform.position = new Vector3(4.25f, 18.5f, 10);
+            cameraPlateau1.transform.localPosition = new Vector3(0f, 9.25f, 0f);
+            cameraPlateau2.transform.localPosition = new Vector3(0f, 9.25f, 0f);
         }
     }
 }

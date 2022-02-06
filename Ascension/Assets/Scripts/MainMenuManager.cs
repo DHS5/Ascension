@@ -16,20 +16,17 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject scene3;
     [SerializeField] GameObject scene4;
     [SerializeField] GameObject sceneRules;
+    [SerializeField] GameObject sceneSettings;
     [SerializeField] Button backButton;
-    [SerializeField] Button rulesButton;
+    [SerializeField] Button settingsButton;
     [SerializeField] Button button2;
     [SerializeField] Button button4;
 
-    private int sceneNumber = 0 ;
+    private int sceneNumber = 0;
 
-    public void StartGame()
-    {
-        scene0.SetActive(false);
-        scene1.SetActive(true);
-        backButton.gameObject.SetActive(true);
-        sceneNumber++;
-    }
+    /// <summary>
+    /// Quit the game
+    /// </summary>
     public void QuitGame()
     {
 #if UNITY_EDITOR
@@ -38,113 +35,97 @@ public class MainMenuManager : MonoBehaviour
         Application.Quit();
 #endif
     }
+
+    /// <summary>
+    /// Return to the previous screen
+    /// </summary>
     public void Back()
     {
-        if (sceneRules.activeSelf)
-        {
-            rulesButton.gameObject.SetActive(true);
-            if (sceneNumber == 0)
-            {
-                scene0.SetActive(true);
-                sceneRules.SetActive(false);
-                backButton.gameObject.SetActive(false);
-            }
-            else if (sceneNumber == 1)
-            {
-                scene1.SetActive(true);
-                sceneRules.SetActive(false);
-            }
-            else if (sceneNumber == 2)
-            {
-                scene2.SetActive(true);
-                sceneRules.SetActive(false);
-            }
-            else if (sceneNumber == 3)
-            {
-                scene3.SetActive(true);
-                sceneRules.SetActive(false);
-            }
-            else if (sceneNumber == 4)
-            {
-                scene4.SetActive(true);
-                sceneRules.SetActive(false);
-            }
-        }
-        else
-        {
-            if (sceneNumber == 1)
-            {
-                scene1.SetActive(false);
-                scene0.SetActive(true);
-                backButton.gameObject.SetActive(false);
-            }
-            else if (sceneNumber == 2)
-            {
-                scene2.SetActive(false);
-                scene1.SetActive(true);
-            }
-            else if (sceneNumber == 3)
-            {
-                scene3.SetActive(false);
-                scene2.SetActive(true);
-            }
-            else if (sceneNumber == 4)
-            {
-                scene4.SetActive(false);
-                scene3.SetActive(true);
-            }
-            sceneNumber--;
-        }
+        sceneNumber--;
+        OpenScreen(sceneNumber);
     }
-    public void Rules()
+
+    /// <summary>
+    /// Open the chosen scene
+    /// </summary>
+    /// <param name="number">Chosen scene's number</param>
+    public void OpenScreen(int number)
     {
-        backButton.gameObject.SetActive(true);
+        CloseAllScreens();
+        switch (number)
+        {
+            case 0:
+                scene0.SetActive(true);
+                backButton.gameObject.SetActive(false);
+                break;
+            case 1:
+                scene1.SetActive(true);
+                backButton.gameObject.SetActive(true);
+                break;
+            case 2:
+                scene2.SetActive(true);
+                backButton.gameObject.SetActive(true);
+                break;
+            case 3:
+                scene3.SetActive(true);
+                backButton.gameObject.SetActive(true);
+                break;
+            case 4:
+                scene4.SetActive(true);
+                backButton.gameObject.SetActive(true);
+                break;
+            default:
+                OpenScreen(sceneNumber);
+                settingsButton.gameObject.SetActive(true);
+                break;
+        }
+        if (number >= 0) sceneNumber = number;
+    }
+
+    /// <summary>
+    /// Close all the UI screens
+    /// </summary>
+    public void CloseAllScreens()
+    {
         scene0.SetActive(false);
         scene1.SetActive(false);
         scene2.SetActive(false);
         scene3.SetActive(false);
         scene4.SetActive(false);
-        sceneRules.SetActive(true);
-        rulesButton.gameObject.SetActive(false);
+        sceneRules.SetActive(false);
+        sceneSettings.SetActive(false);
     }
+
+    /// <summary>
+    /// Make Player1 a player if 1, Player2 a player if 2
+    /// </summary>
+    /// <param name="number">Number of the player</param>
     public void ChoosePlayer(int number)
     {
-        sceneNumber++;
-        if (number == 1)
-        {
-            scene1.SetActive(false);
-            scene2.SetActive(true);
-            DataManager.InstanceDataManager.modeJ1 = "J";
-        }
-        else if (number == 2)
-        {
-            scene2.SetActive(false);
-            scene3.SetActive(true);
-            DataManager.InstanceDataManager.modeJ2 = "J";
-        }
+        if (number == 1) DataManager.InstanceDataManager.modeJ1 = "J";
+        else DataManager.InstanceDataManager.modeJ2 = "J";
     }
+    /// <summary>
+    /// Make Player1 an AI if 1, Player2 an AI if 2
+    /// </summary>
+    /// <param name="number">Number of the player</param>
     public void ChooseAI(int number)
     {
-        sceneNumber++;
-        if (number == 1)
-        {
-            scene1.SetActive(false);
-            scene2.SetActive(true);
-            DataManager.InstanceDataManager.modeJ1 = "IA";
-        }
-        else if (number == 2)
-        {
-            scene2.SetActive(false);
-            scene3.SetActive(true);
-            DataManager.InstanceDataManager.modeJ2 = "IA";
-        }
+        if (number == 1) DataManager.InstanceDataManager.modeJ1 = "IA";
+        else DataManager.InstanceDataManager.modeJ2 = "IA";
     }
+
+    /// <summary>
+    /// Make the number of tile on the board equal to size
+    /// Disable the possibilities of having :
+    /// Size = 15 and Move per turn = 2
+    /// Size = 11 and Move per turn = 4
+    /// (Bad modes)
+    /// </summary>
+    /// <param name="size">Number of tile on the board</param>
     public void ChooseSize(int size)
     {
         DataManager.InstanceDataManager.tailleTableau = size;
-        scene3.SetActive(false);
-        scene4.SetActive(true);
-        sceneNumber++;
         if (size == 15)
         {
             button2.interactable = false;
@@ -162,6 +143,12 @@ public class MainMenuManager : MonoBehaviour
         }
 
     }
+
+    /// <summary>
+    /// Make the number of move per turn equal to cPT
+    /// Start the game
+    /// </summary>
+    /// <param name="cPT">Number of move per turn</param>
     public void ChooseMovePerTurn(int cPT)
     {
         DataManager.InstanceDataManager.coupParTour = cPT;
