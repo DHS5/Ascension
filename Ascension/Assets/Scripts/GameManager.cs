@@ -12,7 +12,8 @@ public class GameManager : MonoBehaviour
     public int[,] tabPossJ1;
     public int[,] tabPossJ2;
     public int tour = 1;
-    public bool gameOn = true;
+    public bool gameOn { get; set; }
+    public bool gameOver = false;
     public int coupParTourJ1;
     public int coupParTourJ2;
     public int coupAJouer;
@@ -26,6 +27,16 @@ public class GameManager : MonoBehaviour
     private string modeJ1 = DataManager.InstanceDataManager.modeJ1;
     private string modeJ2 = DataManager.InstanceDataManager.modeJ2;
     private int tailleTableau = DataManager.InstanceDataManager.tailleTableau;
+    public bool DelayAI
+    {
+        get { return delayAI; }
+        set
+        {
+            delayAI = value;
+            DataManager.InstanceDataManager.delayAI = value;
+        }
+    }
+    private bool delayAI = DataManager.InstanceDataManager.delayAI;
 
     // Start is called before the first frame update
     void Start()
@@ -37,6 +48,8 @@ public class GameManager : MonoBehaviour
         coupParTourJ1 = DataManager.InstanceDataManager.coupParTour;
         coupParTourJ2 = DataManager.InstanceDataManager.coupParTour;
         coupAJouer = DataManager.InstanceDataManager.coupParTour;
+        delayAI = DataManager.InstanceDataManager.delayAI;
+        gameOn = true;
         if (modeJ1 == "IA")
         {
             gameOn = false;
@@ -153,6 +166,7 @@ public class GameManager : MonoBehaviour
         gameOn = true;
         MoveIA();
     }
+
     IEnumerator NumeratorNextTour()
     {
         yield return new WaitForSeconds(0.25f);
@@ -174,6 +188,7 @@ public class GameManager : MonoBehaviour
         gameUIManager.textCAJ.text = "Moves\nleft : " + coupAJouer;
         //AIManager.InstanceAIManager.test();
         PasseTour();
+        ActuSelectable();
         if (coupAJouer == 0)
         {
             NextPlay(-2);
@@ -249,6 +264,18 @@ public class GameManager : MonoBehaviour
         Debug.Log("//");
         /*/
     }
+
+    /// <summary>
+    /// Create a delay between AI's moves
+    /// </summary>
+    /// <param name="y">Parameter to pass to a function inside the coroutine</param>
+    /// <returns>Wait for 0.1s</returns>
+    IEnumerator DelayAIEnum(int y)
+    {
+        if (delayAI) yield return new WaitForSeconds(0.25f);
+        NextPlay(y);
+    }
+
     private void MoveIA()
     {
         if (gameOn)
@@ -269,7 +296,8 @@ public class GameManager : MonoBehaviour
                 Plateau.InstancePlateau.tabCase[x, y].gameObject.GetComponent<Case>().clicked = true;
                 if (gameOn)
                 {
-                    NextPlay(y);
+                    // Delay between AI's moves
+                    StartCoroutine(DelayAIEnum(y));
                 }
             }
             else
@@ -395,6 +423,7 @@ public class GameManager : MonoBehaviour
         coupSupp++;
         tabVictoire[y] = tour;
         ConditionVictoire();
+        AudioManager.InstanceAudioManager.PlayEarthquake();
     }
     // Print the content of tabPoss
     public void PrintTabPoss()
@@ -561,6 +590,49 @@ public class GameManager : MonoBehaviour
         }
         //PasseTour();
     }
+
+    /// <summary>
+    /// Actualize all tiles with the state : selectable or not
+    /// </summary>
+    public void ActuSelectable()
+    {
+        for (int x = 0; x < tailleTableau; x++)
+        {
+            for (int y = 0; y < tailleTableau; y++)
+            {
+                if (tour == 1)
+                {
+                    if (x >= (tailleTableau - 1) / 2)
+                    {
+                        if (GetTabPossJ1(x,y) > 0 && GetTabPossJ1(x, y) <= coupAJouer) Plateau.InstancePlateau.tabCase[x, y].gameObject.GetComponent<Case>().Selectable(true);
+                        else Plateau.InstancePlateau.tabCase[x, y].gameObject.GetComponent<Case>().Selectable(false);
+                    }
+                    else Plateau.InstancePlateau.tabCase[x, y].gameObject.GetComponent<Case>().Selectable(false);
+                }
+                else if (tour == 2)
+                {
+                    if (x < (tailleTableau + 1) / 2)
+                    {
+                        if (GetTabPossJ2(x, y) > 0 && GetTabPossJ2(x, y) <= coupAJouer) Plateau.InstancePlateau.tabCase[x, y].gameObject.GetComponent<Case>().Selectable(true);
+                        else Plateau.InstancePlateau.tabCase[x, y].gameObject.GetComponent<Case>().Selectable(false);
+                    }
+                    else Plateau.InstancePlateau.tabCase[x, y].gameObject.GetComponent<Case>().Selectable(false);
+                }
+            }
+        }
+    }
+
+    public void AllUnselectable()
+    {
+        for (int x = 0; x < tailleTableau; x++)
+        {
+            for (int y = 0; y < tailleTableau; y++)
+            {
+                Plateau.InstancePlateau.tabCase[x, y].gameObject.GetComponent<Case>().Selectable(false);
+            }
+        }
+    }
+
     public void PasseTour()
     {
         if (tour == 1)
@@ -609,8 +681,10 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Victory player " + joueur);
         }
+        AllUnselectable();
         DataManager.InstanceDataManager.UpdateGameString("//" + joueur);
         gameOn = false;
+        gameOver = true;
         gameUIManager.VictoryMenu(joueur);
     }
 }

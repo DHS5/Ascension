@@ -141,7 +141,6 @@ public class MainMenuManager : MonoBehaviour
             button2.interactable = true;
             button4.interactable = true;
         }
-
     }
 
     /// <summary>
@@ -154,5 +153,12 @@ public class MainMenuManager : MonoBehaviour
         DataManager.InstanceDataManager.coupParTour = cPT;
         DataManager.InstanceDataManager.UpdateGameString(DataManager.InstanceDataManager.tailleTableau + "." + DataManager.InstanceDataManager.coupParTour + ";");
         SceneManager.LoadScene(1);
+    }
+
+
+    public void SetAIDelay(bool condition)
+    {
+        if (condition) DataManager.InstanceDataManager.delayAI = true;
+        else DataManager.InstanceDataManager.delayAI = false;
     }
 }

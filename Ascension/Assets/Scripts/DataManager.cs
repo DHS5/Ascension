@@ -11,12 +11,15 @@ public class DataManager : MonoBehaviour
     public string modeJ2;
     public int tailleTableau;
     public int coupParTour;
+    public bool delayAI = true;
 
     public string gameString = "";
     public string[] gameRecord;
     public int gameNumber;
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Initialize the DataManager instance to pass informations through the scenes
+    /// </summary>
     void Start()
     {
         if (InstanceDataManager != null)
@@ -28,6 +31,12 @@ public class DataManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    /// <summary>
+    /// Reset the chosen game record file (given the mode)
+    /// !!! Be careful with this function, irreversible !!!
+    /// </summary>
+    /// <param name="tT">Size of the board</param>
+    /// <param name="cPT">Number of move er turn</param>
     private void ResetGameRecord(int tT, int cPT)
     {
         tailleTableau = tT;
@@ -37,6 +46,9 @@ public class DataManager : MonoBehaviour
         SaveGameRecord();
     }
 
+    /// <summary>
+    /// Add the new game string to the game record file
+    /// </summary>
     public void AddGameStringToRecord()
     {
         LoadGameRecord();
@@ -48,6 +60,11 @@ public class DataManager : MonoBehaviour
             gameRecord[0] = gameString;
         }
     }
+
+    /// <summary>
+    /// Update the current game string with the last move
+    /// </summary>
+    /// <param name="c">Move to add</param>
     public void UpdateGameString(string c)
     {
         gameString += c;
@@ -59,11 +76,19 @@ public class DataManager : MonoBehaviour
             ClearGameString();
         }
     }
+
+    /// <summary>
+    /// Clear the current game string
+    /// Used for an unfinished game
+    /// </summary>
     public void ClearGameString()
     {
         gameString = "";
     }
 
+    /// <summary>
+    /// Class used to save the game record and the number of games
+    /// </summary>
     [System.Serializable]
     class SaveData
     {
@@ -73,6 +98,9 @@ public class DataManager : MonoBehaviour
 
     // C:/Users/tomnd/AppData/LocalLow/DH5/Ascension/
 
+    /// <summary>
+    /// Save the game record in the corresponding file
+    /// </summary>
     public void SaveGameRecord()
     {
         SaveData data = new SaveData();
@@ -84,6 +112,9 @@ public class DataManager : MonoBehaviour
         File.WriteAllText(Application.persistentDataPath + "/savefile" + tailleTableau + coupParTour + ".json", json);
     }
 
+    /// <summary>
+    /// Load the game record from the corresponding file
+    /// </summary>
     public void LoadGameRecord()
     {
         string path = Application.persistentDataPath + "/savefile" + tailleTableau + coupParTour + ".json";

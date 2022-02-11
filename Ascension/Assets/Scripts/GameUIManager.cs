@@ -53,6 +53,14 @@ public class GameUIManager : MonoBehaviour
         DataManager.InstanceDataManager.ClearGameString();
         SceneManager.LoadScene(0);
     }
+
+    public void BackToGame()
+    {
+        if (GameManager.InstanceGameManager.gameOver)
+            restartScreen.SetActive(true);
+        else
+            gameScreen.SetActive(true);
+    }
     public void UpdateCAJ(int caj)
     {
         textCAJ.text = "Moves\nleft : " + caj;
@@ -60,7 +68,8 @@ public class GameUIManager : MonoBehaviour
     public void UpdateCN(int cn)
     {
         textCN.gameObject.SetActive(true);
-        textCN.text = "Moves\nnecessary :\n" + cn;
+        if (cn == 1) textCN.text = "Wait for\nyour turn";
+        else textCN.text = "Moves\nnecessary :\n" + cn;
     }
     public void VictoryMenu(int joueur)
     {

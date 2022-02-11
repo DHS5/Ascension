@@ -17,16 +17,23 @@ public class CameraManager : MonoBehaviour
 
     public static CameraManager InstanceCamera { get; private set; }
 
+    [Tooltip("")]
     public int cameraActive = 1;
 
-    private int angle = DataManager.InstanceDataManager.tailleTableau;
+    private int taille = DataManager.InstanceDataManager.tailleTableau;
 
+    /// <summary>
+    /// Initialize the camera
+    /// </summary>
     private void Start()
     {
         InstanceCamera = this;
         AngleCamera();
     }
 
+    /// <summary>
+    /// Activate the camera with a player view of the board for Player1
+    /// </summary>
     public void ActiveCameraJ1()
     {
         cameraJ1.gameObject.SetActive(true);
@@ -35,6 +42,10 @@ public class CameraManager : MonoBehaviour
         cameraPlateau2.gameObject.SetActive(false);
         cameraActive = 1;
     }
+
+    /// <summary>
+    /// Activate the camera with a player view of the board for Player2
+    /// </summary>
     public void ActiveCameraJ2()
     {
         cameraJ1.gameObject.SetActive(false);
@@ -43,6 +54,10 @@ public class CameraManager : MonoBehaviour
         cameraPlateau2.gameObject.SetActive(false);
         cameraActive = 2;
     }
+
+    /// <summary>
+    /// Activate the camera with a top view of the board for Player1
+    /// </summary>
     public void ActiveCameraPlateau1()
     {
         cameraJ1.gameObject.SetActive(false);
@@ -51,6 +66,10 @@ public class CameraManager : MonoBehaviour
         cameraPlateau2.gameObject.SetActive(false);
         cameraActive = 3;
     }
+
+    /// <summary>
+    /// Activate the camera with a top view of the board for Player2
+    /// </summary>
     public void ActiveCameraPlateau2()
     {
         cameraJ1.gameObject.SetActive(false);
@@ -59,9 +78,13 @@ public class CameraManager : MonoBehaviour
         cameraPlateau2.gameObject.SetActive(true);
         cameraActive = 3;
     }
+
+    /// <summary>
+    /// Place the camera at the right position and angle given the size of the board
+    /// </summary>
     private void AngleCamera()
     {
-        if (angle == 11)
+        if (taille == 11)
         {
             cameraJ1.transform.localPosition = new Vector3(0f, 7.25f, 8f);
             cameraJ1.transform.eulerAngles = new Vector3(30, 180, 0);
@@ -70,7 +93,7 @@ public class CameraManager : MonoBehaviour
             cameraPlateau1.transform.localPosition = new Vector3(0f, 7.25f, 0f);
             cameraPlateau2.transform.localPosition = new Vector3(0f, 7.25f, 0f);
         }
-        else if (angle == 13)
+        else if (taille == 13)
         {
             cameraJ1.transform.localPosition = new Vector3(0f, 7.75f, 8.5f);
             cameraJ1.transform.eulerAngles = new Vector3(35, 180, 0);
@@ -79,7 +102,7 @@ public class CameraManager : MonoBehaviour
             cameraPlateau1.transform.localPosition = new Vector3(0f, 8.25f, 0f);
             cameraPlateau2.transform.localPosition = new Vector3(0f, 8.25f, 0f);
         }
-        else if (angle == 15)
+        else if (taille == 15)
         {
             cameraJ1.transform.localPosition = new Vector3(0f, 8.25f, 9f);
             cameraJ1.transform.eulerAngles = new Vector3(40, 180, 0);
