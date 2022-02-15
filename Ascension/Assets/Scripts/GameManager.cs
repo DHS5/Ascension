@@ -12,7 +12,12 @@ public class GameManager : MonoBehaviour
     public int[,] tabPossJ1;
     public int[,] tabPossJ2;
     public int tour = 1;
-    public bool gameOn { get; set; }
+    public bool gameOn = true;
+    public bool GameOn
+    {
+        get { return gameOn; }
+        set { gameOn = value; }
+    }
     public bool gameOver = false;
     public int coupParTourJ1;
     public int coupParTourJ2;
@@ -49,7 +54,6 @@ public class GameManager : MonoBehaviour
         coupParTourJ2 = DataManager.InstanceDataManager.coupParTour;
         coupAJouer = DataManager.InstanceDataManager.coupParTour;
         delayAI = DataManager.InstanceDataManager.delayAI;
-        gameOn = true;
         if (modeJ1 == "IA")
         {
             gameOn = false;
@@ -213,9 +217,7 @@ public class GameManager : MonoBehaviour
         }
         else if (GetMode() == "IA")
         {
-            //Debug.Log("IA 1.1");
             GetCoupAJouer();
-            //MoveIA();
         }
     }
     public void NextPlay(int y)
@@ -245,24 +247,11 @@ public class GameManager : MonoBehaviour
             NextTour();
         }
         gameUIManager.UpdateCAJ(coupAJouer);
-        if (GetMode() == "IA" && gameOn)
+        if (GetMode() == "IA")
         {
-            //Debug.Log("IA 1.2");
-            MoveIA();
+            if (!gameOn) { StartCoroutine(AIWaitForGameOn()); }
+            else MoveIA();
         }
-
-        /*/
-        for (int i = 0; i < tailleTableau; i++)
-        {
-            Debug.Log(tabPossJ1[(tailleTableau - 1) / 2, i]);
-        }
-        Debug.Log(";");
-        for (int i = 0; i < tailleTableau; i++)
-        {
-            Debug.Log(tabPossJ2[(tailleTableau - 1) / 2, i]);
-        }
-        Debug.Log("//");
-        /*/
     }
 
     /// <summary>
@@ -276,12 +265,35 @@ public class GameManager : MonoBehaviour
         NextPlay(y);
     }
 
+    /// <summary>
+    /// Function used in the AIWaitForGameOn coroutine
+    /// </summary>
+    /// <returns>The value of gameOn</returns>
+    private bool IsGameOn()
+    {
+        return gameOn;
+    }
+    /// <summary>
+    /// Corountine used to suspend the actions of the AI when gameOn is false
+    /// </summary>
+    /// <returns>Wait until gameOn is true</returns>
+    IEnumerator AIWaitForGameOn()
+    {
+        yield return new WaitUntil(IsGameOn);
+        MoveIA();
+        Debug.Log("GameOn");
+    }
+
+    /// <summary>
+    /// Get a move from the AI
+    /// The move is a vector 2 : (x,y)
+    /// x --> line
+    /// y --> column
+    /// </summary>
     private void MoveIA()
     {
-        if (gameOn)
+        if (!gameOver)
         {
-            //Debug.Log("IA 2");
-            //Debug.Log("CAJ : " + coupAJouer);
             Vector2 move = AIManager.InstanceAIManager.GetMoveIA();
             int x = (int)move.x;
             int y = (int)move.y;
@@ -290,11 +302,11 @@ public class GameManager : MonoBehaviour
             {
                 passeTour = 0;
                 Plateau.InstancePlateau.tabCase[x, y].gameObject.GetComponent<Case>().ActuPlateau();
-                //PrintTabPoss();
+                if (delayAI) AudioManager.InstanceAudioManager.PlaySelectTile();
                 ActuTab(x, y);
                 //Debug.Log("CAJ2 : " + coupAJouer);
                 Plateau.InstancePlateau.tabCase[x, y].gameObject.GetComponent<Case>().clicked = true;
-                if (gameOn)
+                if (!gameOver)
                 {
                     // Delay between AI's moves
                     StartCoroutine(DelayAIEnum(y));
@@ -422,8 +434,8 @@ public class GameManager : MonoBehaviour
         }
         coupSupp++;
         tabVictoire[y] = tour;
-        ConditionVictoire();
         AudioManager.InstanceAudioManager.PlayEarthquake();
+        ConditionVictoire();
     }
     // Print the content of tabPoss
     public void PrintTabPoss()

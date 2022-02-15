@@ -4933,7 +4933,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 2000
   field of view: 81.78679
   orthographic: 0
   orthographic size: 5
@@ -6373,7 +6373,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 0.87058824, b: 0.19607843, a: 1}
-  m_Intensity: 1.2
+  m_Intensity: 1.5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -6629,7 +6629,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.25
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -8227,33 +8227,48 @@ MonoBehaviour:
   - {fileID: 1552171744}
   - {fileID: 1137445346}
   audioClips:
+  - {fileID: 8300000, guid: 28194ff8fd51a0b45883850293069879, type: 3}
+  - {fileID: 8300000, guid: 5b59cce20f4d42a48b3069957f936fe4, type: 3}
+  - {fileID: 8300000, guid: 4ceba6cb515298845a44a730ae2a533e, type: 3}
+  - {fileID: 8300000, guid: c663d476cd3f39842997f9c61fafc171, type: 3}
+  - {fileID: 8300000, guid: ff0c72a2c764aeb4492189e8337a9ec6, type: 3}
+  - {fileID: 8300000, guid: 5560dab8d4e025f4fae616c8db7cac5f, type: 3}
+  - {fileID: 8300000, guid: 03d4a29772f2ba7419dacf58f7f73fdb, type: 3}
+  - {fileID: 8300000, guid: 7e949e7333b06ee40b6b1a3eb5f50ad8, type: 3}
+  - {fileID: 8300000, guid: 8b8ab71ffffc24e5582de0192d9dcee8, type: 3}
+  - {fileID: 8300000, guid: 079b16d65b3b04fe8aee9e756c46e985, type: 3}
+  - {fileID: 8300000, guid: c87d5de36866a4e52807a649a18f2064, type: 3}
+  - {fileID: 8300000, guid: d8b719ef1c3254c97b2c5b785c2d5fd3, type: 3}
+  - {fileID: 8300000, guid: aac7cef1916c347b8849593e8473e54f, type: 3}
+  - {fileID: 8300000, guid: a48aa39a296f0442aa9de53687e7326d, type: 3}
+  - {fileID: 8300000, guid: d9e280ca0b9d3ad4f83da6d4defd2c91, type: 3}
+  - {fileID: 8300000, guid: c68788866aeacbf4bbc7cb21bbb383b4, type: 3}
   - {fileID: 8300000, guid: 26364aaf1f64b40c1a047b0bacfbd10e, type: 3}
   - {fileID: 8300000, guid: 1555836638cd34283a3780a19b58d4c6, type: 3}
   - {fileID: 8300000, guid: 07f391589664f4e85904fa28802b4aa8, type: 3}
   - {fileID: 8300000, guid: 6306498bbea9342a58ad61d5f7128830, type: 3}
-  - {fileID: 8300000, guid: b4e03b819912ca746b68c6610bd537b3, type: 3}
   - {fileID: 8300000, guid: 631b1702899f12f4787890ce6c4912b3, type: 3}
-  - {fileID: 8300000, guid: 603001d590a40ff468c947f3c96a4ced, type: 3}
-  - {fileID: 8300000, guid: a98a2050900001c4682a518b5c3fd5f1, type: 3}
-  - {fileID: 8300000, guid: fb00ea2db68b94943a2537f68df56678, type: 3}
-  - {fileID: 8300000, guid: a4510a89aee278a46af3aeb1090d4314, type: 3}
-  - {fileID: 8300000, guid: 5dc83e7b35f0c844d8facfb119a92514, type: 3}
   - {fileID: 8300000, guid: c68403026d884774d85edda580b3f64f, type: 3}
-  - {fileID: 8300000, guid: 039ad8366564ddb4285a35b0ecafaa1e, type: 3}
-  - {fileID: 8300000, guid: caf04ce96f2fb5143b09f570ac3cd563, type: 3}
   - {fileID: 8300000, guid: 537f9e2b44abc864b9038be47416abbf, type: 3}
   - {fileID: 8300000, guid: 824f33afe798f2842ae31de52ce5dea4, type: 3}
-  - {fileID: 8300000, guid: d06561493678fea4f8cb936d5905277d, type: 3}
-  - {fileID: 8300000, guid: adbb8769396311c439a773d4679dca13, type: 3}
-  - {fileID: 8300000, guid: 52e62089777204e4d87d2edeaf2ef836, type: 3}
-  - {fileID: 8300000, guid: 11b09517fdaa84e4484afe4d3ea847f4, type: 3}
   - {fileID: 8300000, guid: 79667ccf5dba62c4dbee562e6bec6f93, type: 3}
-  - {fileID: 8300000, guid: 48ea6c42dac01d64e9ef2a2aec245c65, type: 3}
+  - {fileID: 8300000, guid: e7fb12b1027e64749aa37c1dbe00fa70, type: 3}
+  - {fileID: 8300000, guid: 3be6af70608c67842abad45f0e532765, type: 3}
+  - {fileID: 8300000, guid: b76dee63927eec549ab421da21568d8c, type: 3}
+  - {fileID: 8300000, guid: d38d19c50f8a8a54882cb62465046310, type: 3}
+  - {fileID: 8300000, guid: ed4e940e489c31b4f9560e1680486bb1, type: 3}
+  - {fileID: 8300000, guid: 72bfb55fe51d39b449d8437fd37c1f1d, type: 3}
+  - {fileID: 8300000, guid: 1feed20c4e803784288c78d7888af10a, type: 3}
+  - {fileID: 8300000, guid: 925f37a784fecd44b9944cb7f5e3111f, type: 3}
+  - {fileID: 8300000, guid: 129c1d2c70f1437459479993aa16be90, type: 3}
+  - {fileID: 8300000, guid: 61872b382fb617f4faa39bf24055a8d6, type: 3}
   SFXClips:
   - {fileID: 8300000, guid: 32d4b1811dda14a6cb9e059ee8ad17d2, type: 3}
   - {fileID: 8300000, guid: 7bef0064f8567430cac22499c6b93d4f, type: 3}
-  - {fileID: 8300000, guid: 5ae4d298ed547ba4c88587effb75d7e1, type: 3}
+  - {fileID: 8300000, guid: b0f50fc913186d640b44838fe37677ec, type: 3}
   soundScrollbar: {fileID: 768695399}
+  audioClipNumber: 0
+  audioNumber: 0
 --- !u!4 &2054262252
 Transform:
   m_ObjectHideFlags: 0

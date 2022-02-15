@@ -25,29 +25,18 @@ public class GameUIManager : MonoBehaviour
     {
         if (CameraManager.InstanceCamera.cameraActive != 3)
         {
-            if (restartScreen.activeSelf) { restartScreen.SetActive(false); }
-            if (GameManager.InstanceGameManager.tour == 1)
-            {
-                CameraManager.InstanceCamera.ActiveCameraPlateau1();
-            }
-            else
-            {
-                CameraManager.InstanceCamera.ActiveCameraPlateau2();
-            }
+            if (restartScreen.activeSelf) restartScreen.SetActive(false);
+            if (GameManager.InstanceGameManager.tour == 1) CameraManager.InstanceCamera.ActiveCameraPlateau1();
+            else CameraManager.InstanceCamera.ActiveCameraPlateau2();
         }
         else
         {
-            if (!gameScreen.activeSelf) { restartScreen.SetActive(true); }
-            if (GameManager.InstanceGameManager.tour == 1)
-            {
-                CameraManager.InstanceCamera.ActiveCameraJ1();
-            }
-            else
-            {
-                CameraManager.InstanceCamera.ActiveCameraJ2();
-            }
+            if (!gameScreen.activeSelf) restartScreen.SetActive(true);
+            if (GameManager.InstanceGameManager.tour == 1) CameraManager.InstanceCamera.ActiveCameraJ1();
+            else CameraManager.InstanceCamera.ActiveCameraJ2();
         }
     }
+
     public void BackToMenu()
     {
         DataManager.InstanceDataManager.ClearGameString();
@@ -61,6 +50,7 @@ public class GameUIManager : MonoBehaviour
         else
             gameScreen.SetActive(true);
     }
+
     public void UpdateCAJ(int caj)
     {
         textCAJ.text = "Moves\nleft : " + caj;

@@ -16,8 +16,8 @@ public class AudioManager : MonoBehaviour
     private AudioClip clip;
     public Scrollbar soundScrollbar;
 
-    private int audioClipNumber;
-    private int audioNumber;
+    public int audioClipNumber;
+    public int audioNumber;
     private bool newInstance = false;
     private float clipTime;
     public bool pause { get; set; }
@@ -38,6 +38,7 @@ public class AudioManager : MonoBehaviour
             clip = InstanceAudioManager.audioBackground.clip;
             volume = InstanceAudioManager.audioBackground.volume;
             pause = InstanceAudioManager.pause;
+            audioClipNumber = InstanceAudioManager.audioClipNumber;
 
             // Destroy the former AudioManager
             Destroy(InstanceAudioManager.gameObject);
@@ -148,18 +149,18 @@ public class AudioManager : MonoBehaviour
     {
         audioSFX.clip = SFXClips[0];
         audioSFX.time = 0f;
-        audioSFX.pitch = 1;
+        audioSFX.volume = 0.25f;
         audioSFX.Play();
     }
 
     /// <summary>
-    /// Play the game entering sound
+    /// Play the select tile sound
     /// </summary>
     public void PlaySelectTile()
     {
         if (audioSFX.clip != SFXClips[1]) audioSFX.clip = SFXClips[1];
         audioSFX.time = 0.1f;
-        audioSFX.pitch = 1;
+        audioSFX.volume = 0.5f;
         audioSFX.Play();
     }
 
@@ -169,10 +170,10 @@ public class AudioManager : MonoBehaviour
     public void PlayEarthquake()
     {
         audioSFX.clip = SFXClips[2];
-        audioSFX.time = 1f;
-        audioSFX.pitch = 1f;
+        audioSFX.time = 0f;
+        audioSFX.volume = 0.5f;
         audioSFX.Play();
-        StartCoroutine(WaitToStop(1.5f));
+        //StartCoroutine(WaitToStop(1.5f));
     }
 
     IEnumerator WaitToStop(float t)

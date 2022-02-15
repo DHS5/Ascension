@@ -102,7 +102,7 @@ public class Case : MonoBehaviour
         if (!DataManager.InstanceDataManager.delayAI && (GameManager.InstanceGameManager.tour == 1 && DataManager.InstanceDataManager.modeJ1 == "IA" || GameManager.InstanceGameManager.tour == 2 && DataManager.InstanceDataManager.modeJ2 == "IA")) return;
 
         // Sets the curve
-        AnimationCurve curve = AnimationCurve.Linear(0f, transform.localScale.y, 0.1f, 0.01f);
+        AnimationCurve curve = AnimationCurve.Linear(0f, transform.localScale.y, 1f, 0.01f);
 
         // Sets the clip
         climbAnimClip = new AnimationClip();
@@ -149,7 +149,7 @@ public class Case : MonoBehaviour
                 Plateau.InstancePlateau.tabCase[i, (int)coord.y].gameObject.GetComponent<Case>().ClimbAnim();
                 Plateau.InstancePlateau.tabCase[i, (int)coord.y].transform.localScale = transform.localScale;
             }
-            if (Plateau.InstancePlateau.tabCase[(tailleTableau-1)/2,(int)coord.y].transform.localScale.y < transform.localScale.y)
+            if (Plateau.InstancePlateau.tabCase[(tailleTableau - 1) / 2,(int)coord.y].transform.localScale.y < transform.localScale.y - 0.4f)
             {
                 Plateau.InstancePlateau.tabCase[(tailleTableau - 1) / 2, (int)coord.y].gameObject.GetComponent<Case>().ClimbAnim();
                 Plateau.InstancePlateau.tabCase[(tailleTableau - 1) / 2, (int)coord.y].transform.localScale = transform.localScale;
@@ -162,7 +162,7 @@ public class Case : MonoBehaviour
                 Plateau.InstancePlateau.tabCase[j, (int)coord.y].gameObject.GetComponent<Case>().ClimbAnim();
                 Plateau.InstancePlateau.tabCase[j, (int)coord.y].transform.localScale = transform.localScale; 
             }
-            if (Plateau.InstancePlateau.tabCase[(tailleTableau - 1) / 2, (int)coord.y].transform.localScale.y < transform.localScale.y)
+            if (Plateau.InstancePlateau.tabCase[(tailleTableau - 1) / 2, (int)coord.y].transform.localScale.y < transform.localScale.y - 0.4f)
             {
                 Plateau.InstancePlateau.tabCase[(tailleTableau - 1) / 2, (int)coord.y].gameObject.GetComponent<Case>().ClimbAnim();
                 Plateau.InstancePlateau.tabCase[(tailleTableau - 1) / 2, (int)coord.y].transform.localScale = transform.localScale;
@@ -194,6 +194,7 @@ public class Case : MonoBehaviour
     }
     private bool Actived()
     {
+        if (GameManager.InstanceGameManager.tour == 1 && DataManager.InstanceDataManager.modeJ1 == "IA" || GameManager.InstanceGameManager.tour == 2 && DataManager.InstanceDataManager.modeJ2 == "IA") return false;
         GameManager.InstanceGameManager.DeactivateCN();
         if (Whichplayer() == GameManager.InstanceGameManager.tour || Whichplayer() == 3)
         {
